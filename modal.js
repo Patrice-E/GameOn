@@ -19,7 +19,6 @@ const lastMsg = document.querySelector('#lastMsg');
 const email = document.querySelector('#email');
 const emailMsg = document.querySelector('#emailMsg');
 const birthdate = document.querySelector('#birthdate');
-console.log(birthdate);
 const birthdateMsg = document.querySelector('#birthdateMsg');
 const nbCompetition = document.querySelector('#quantity');
 const nbCompetitionMsg = document.querySelector('#quantityMsg');
