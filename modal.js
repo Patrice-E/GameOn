@@ -57,8 +57,14 @@ function setMsgType(field, label, msgType, msgText) {
 }
 
 // Changes in first and last
-function getIsValidString(str) {
-  if (str.length >= 2) return true;
+function getIsValidString(input, outputMsg) {
+  const str = input.value;
+  if (str.length >= 2) {
+    return true;
+  }
+  const errorType = 'danger';
+  const errorMsg = 'Veuillez entrer deux caractères minimum';
+  setMsgType(input, outputMsg, errorType, errorMsg);
   return false;
 }
 function sendStringMsg(input, outputMsg) {
@@ -78,19 +84,23 @@ lastName.addEventListener('input', function () {
 });
 
 // Changes in email
-function getIsValidEmail(email) {
+function getIsValidEmail(input) {
+  const email = input.value;
   const regExpEmail = new RegExp(
     '^[a-zA-Z0-9.-_]+[@]{1}[a-zA-Z0-9.-_]+[.]{1}[a-z]{2,10}$'
   );
   if (regExpEmail.test(email)) {
     return true;
   }
+  const errorType = 'danger';
+  const errorMsg = 'email non valide';
+  setMsgType(input, emailMsg, errorType, errorMsg);
   return false;
 }
 email.addEventListener('input', function () {
   let errorType = 'danger';
   let errorMsg = 'email non valide';
-  if (getIsValidEmail(this.value)) {
+  if (getIsValidEmail(this)) {
     errorType = 'success';
     errorMsg = 'Champ valide';
   }
@@ -98,8 +108,12 @@ email.addEventListener('input', function () {
 });
 
 // Changes in birthdate
-function getIsValidBirthDate(value) {
+function getIsValidBirthDate(input) {
+  const value = input.value;
   if (!value) {
+    const errorType = 'danger';
+    const errorMsg = 'date non valide';
+    setMsgType(input, birthdateMsg, errorType, errorMsg);
     return false;
   }
   return true;
@@ -115,13 +129,20 @@ birthdate.addEventListener('change', function () {
 });
 
 // Changes on number of competitions
-function getIsNumber(nb) {
-  return nb > 0;
+function getIsNumber(input) {
+  const nb = input.value;
+  if (nb > 0) {
+    return true;
+  }
+  const errorType = 'danger';
+  const errorMsg = 'email non valide';
+  setMsgType(input, nbCompetitionMsg, errorType, errorMsg);
+  return false;
 }
 nbCompetition.addEventListener('input', function () {
   let errorType = 'danger';
   let errorMsg = 'Veuiller entrer une valeur numérique';
-  if (getIsNumber(this.value)) {
+  if (getIsNumber(this)) {
     errorType = 'success';
     errorMsg = 'Champ valide';
   }
@@ -137,7 +158,15 @@ function getIsValidLocation() {
       locCheck = true;
     }
   }
-  return locCheck;
+  if (locCheck) {
+    return true;
+  }
+  const errorType = 'danger';
+  const errorMsg = 'Saississez un tournoi';
+  loc.forEach((inputRadio) =>
+    setMsgType(inputRadio, locMsg, errorType, errorMsg)
+  );
+  return false;
 }
 loc.forEach((inputRadio) =>
   inputRadio.addEventListener('input', function () {
@@ -153,7 +182,13 @@ loc.forEach((inputRadio) =>
 
 // Changes in use conditions
 function getIsConditionChecked(box) {
-  return box.checked;
+  if (box.checked) {
+    return true;
+  }
+  const errorType = 'danger';
+  const errorMsg = "Veuillez accepter les conditions d'utilisation";
+  setMsgType(checkbox, checkboxMsg, errorType, errorMsg);
+  return false;
 }
 checkbox.addEventListener('change', function () {
   let errorType = 'danger';
@@ -167,11 +202,11 @@ checkbox.addEventListener('change', function () {
 
 // validate form
 function validate() {
-  const firstValid = getIsValidString(first.value);
-  const lastValid = getIsValidString(last.value);
-  const emailValid = getIsValidEmail(email.value);
-  const birthdateValid = getIsValidBirthDate(birthdate.value);
-  const nbCompetitionValid = getIsNumber(nbCompetition.value);
+  const firstValid = getIsValidString(first, firstMsg);
+  const lastValid = getIsValidString(last, lastMsg);
+  const emailValid = getIsValidEmail(email);
+  const birthdateValid = getIsValidBirthDate(birthdate);
+  const nbCompetitionValid = getIsNumber(nbCompetition);
   const locValid = getIsValidLocation();
   const conditionChecked = getIsConditionChecked(checkbox);
   if (
@@ -185,7 +220,6 @@ function validate() {
   ) {
     alert('Merci ! Votre réservation a été reçue.');
   } else {
-    alert('Veuillez remplir tous les champs correctement');
     return false;
   }
 }
