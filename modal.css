@@ -500,9 +500,9 @@ input[data-error]::after {
 }
 
 .hero-headline {
-  font-size: 6rem;
+  /* font-size: 6rem; */
   font-weight: normal;
-  white-space: nowrap;
+  /* white-space: nowrap; */
 }
 
 .hero-text {
