@@ -230,10 +230,9 @@ function validate() {
     locValid &&
     conditionChecked
   ) {
-    console.log('Bravo');
-    alert('Bravo');
-  } else {
     modalValidForm();
+    return false;
+  } else {
     return false;
   }
 }
