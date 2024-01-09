@@ -41,6 +41,10 @@ img {
   float: left;
 }
 
+.header-logo img {
+  max-width: 246px;
+}
+
 .main-navbar {
   float: right;
 }
@@ -198,9 +202,24 @@ main {
   padding-top: 10px;
 }
 
-.modal-body {
+.modal-body,
+.modal-valid {
   padding: 15px 8%;
   margin: 15px auto;
+}
+
+.modal-valid {
+  display: none;
+  min-height: 85vh;
+  grid-template-rows: 1fr auto;
+  justify-content: center;
+  align-items: center;
+}
+
+.modal-valid p {
+  font-weight: 400;
+  font-size: 36px;
+  text-align: center;
 }
 
 label {
@@ -246,6 +265,8 @@ input {
 .formData[data-error-visible="true"] .text-control {
   border: 2px solid #e54858;
 }
+
+
 
 /* 
 input[data-error]::after {

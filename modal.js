@@ -43,6 +43,11 @@ function closeModal() {
   modalbg.style.display = 'none';
 }
 
+// launch modal for valid form
+function launchValidModal() {
+  modalvalid.style.display = 'block';
+}
+
 // Set Success or Danger Messages
 function setMsgType(field, label, msgType, msgText) {
   let opposite = 'success';
@@ -70,17 +75,17 @@ function getIsValidString(input, outputMsg) {
 function sendStringMsg(input, outputMsg) {
   let errorType = 'danger';
   let errorMsg = 'Veuillez entrer deux caractères minimum';
-  if (getIsValidString(input.value)) {
+  if (getIsValidString(input, outputMsg)) {
     errorType = 'success';
     errorMsg = 'Champ valide';
   }
   setMsgType(input, outputMsg, errorType, errorMsg);
 }
 firstName.addEventListener('input', function () {
-  sendStringMsg(this, firstMsg);
+  sendStringMsg(first, firstMsg);
 });
 lastName.addEventListener('input', function () {
-  sendStringMsg(this, lastMsg);
+  sendStringMsg(last, lastMsg);
 });
 
 // Changes in email
@@ -121,7 +126,7 @@ function getIsValidBirthDate(input) {
 birthdate.addEventListener('change', function () {
   let errorType = 'danger';
   let errorMsg = 'date non valide';
-  if (getIsValidBirthDate(this.value)) {
+  if (getIsValidBirthDate(this)) {
     errorType = 'success';
     errorMsg = 'Champ valide';
   }
@@ -200,6 +205,13 @@ checkbox.addEventListener('change', function () {
   setMsgType(this, checkboxMsg, errorType, errorMsg);
 });
 
+const modalBody = document.querySelector('.modal-body');
+const modalValid = document.querySelector('.modal-valid');
+function modalValidForm() {
+  modalBody.style.display = 'none';
+  closeModalBtn.style.display = 'none';
+  modalValid.style.display = 'grid';
+}
 // validate form
 function validate() {
   const firstValid = getIsValidString(first, firstMsg);
@@ -218,8 +230,10 @@ function validate() {
     locValid &&
     conditionChecked
   ) {
-    alert('Merci ! Votre réservation a été reçue.');
+    console.log('Bravo');
+    alert('Bravo');
   } else {
+    modalValidForm();
     return false;
   }
 }
